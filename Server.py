@@ -15,14 +15,18 @@ queues = []
 handledPackets = 0
 lastMsg = {}
 
+
 async def handle_writes(websocket, queue):
     while True:
-        pkt  = await queue.get()
+        pkt = await queue.get()
         await websocket.send(json.dumps({'c': pkt}, separators=(',', ':')))
+
 
 async def handle_reads(websocket):
     while True:
-        pkt = websocket.recv()
+        pkt = await websocket.recv()
+        print(pkt)
+
 
 async def handle_ws(websocket, path):
     global lastMsg
@@ -35,8 +39,8 @@ async def handle_ws(websocket, path):
     queues.append(queue)
 
     try:
-        fs = [await handle_writes(websocket, queue), await handle_reads(websocket)]
-        asyncio.wait(fs, return_when=asyncio.FIRST_COMPLETED)
+        fs = [handle_writes(websocket, queue), handle_reads(websocket)]
+        await asyncio.wait(fs, return_when=asyncio.ALL_COMPLETED)
     except websockets.exceptions.ConnectionClosed:
         logging.info("WS Client disconnected %s:%s", remote_addr[0], remote_addr[1])
     finally:
@@ -58,6 +62,7 @@ async def put_to_queue(data):
         else:
             pass
     lastMsg = data
+
 
 async def read_from_server(host: str, port: int, loop):
     # Exponential backoff
