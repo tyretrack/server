@@ -40,10 +40,13 @@ async def handle_ws(websocket, path):
 
     try:
         fs = [handle_writes(websocket, queue), handle_reads(websocket)]
-        await asyncio.wait(fs, return_when=asyncio.ALL_COMPLETED)
+        (_, pending) = await asyncio.wait(fs, return_when=asyncio.FIRST_EXCEPTION)
+        for f in pending:
+            f.cancel()
     except websockets.exceptions.ConnectionClosed:
-        logging.info("WS Client disconnected %s:%s", remote_addr[0], remote_addr[1])
+        pass
     finally:
+        logging.info("WS Client disconnected %s:%s", remote_addr[0], remote_addr[1])
         queues.remove(queue)
 
 
