@@ -15,6 +15,15 @@ queues = []
 handledPackets = 0
 lastMsg = {}
 
+async def handle_writes(websocket, queue):
+    while True:
+        pkt  = await queue.get()
+        await websocket.send(json.dumps({'c': pkt}, separators=(',', ':')))
+
+async def handle_reads(websocket):
+    while True:
+        pkt = websocket.recv()
+
 async def handle_ws(websocket, path):
     global lastMsg
     remote_addr = websocket.remote_address
@@ -26,10 +35,8 @@ async def handle_ws(websocket, path):
     queues.append(queue)
 
     try:
-        while True:
-            pkt = await queue.get()
-            await websocket.send(json.dumps({'c': pkt}, separators=(',', ':')))
-
+        fs = [await handle_writes(websocket, queue), await handle_reads(websocket)]
+        asyncio.wait(fs, return_when=asyncio.FIRST_COMPLETED)
     except websockets.exceptions.ConnectionClosed:
         logging.info("WS Client disconnected %s:%s", remote_addr[0], remote_addr[1])
     finally:
