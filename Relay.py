@@ -99,7 +99,8 @@ def open_udp_broadcast_listener(loop, port, handler):
 def gather_stats(loop):
     global handledPackets
 
-    logging.info('%s Pkt/min:', handledPackets)
+    logging.info('%s Connections', len(queues))
+    logging.info('%s Pkt/min', handledPackets)
     handledPackets = 0
 
     loop.call_later(60, gather_stats, loop)

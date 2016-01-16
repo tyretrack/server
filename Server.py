@@ -117,7 +117,8 @@ async def read_from_server(host: str, port: int, loop):
 def gather_stats(loop):
     global handledPackets
 
-    logging.info('%s Pkt/min:', handledPackets)
+    logging.info('%s Connections', len(queues))
+    logging.info('%s Pkt/min', handledPackets)
     handledPackets = 0
 
     loop.call_later(60, gather_stats, loop)
