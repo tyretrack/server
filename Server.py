@@ -16,16 +16,25 @@ handledPackets = 0
 lastMsg = {}
 
 
-async def handle_writes(websocket, queue):
+async def handle_writes(websocket, queue, subscription: list):
     while True:
-        pkt = await queue.get()
-        await websocket.send(json.dumps({'c': pkt}, separators=(',', ':')))
+        data = await queue.get()
+        pkt = {}
+
+        for key in subscription:
+            if key in data:
+                pkt[key] = data[key]
+
+        if pkt:
+            await websocket.send(json.dumps({'c': pkt}, separators=(',', ':')))
 
 
-async def handle_reads(websocket):
+async def handle_reads(websocket, subscription: list):
     while True:
-        pkt = await websocket.recv()
-        print(pkt)
+        pkt = json.loads(await websocket.recv())
+        if pkt['type'] == "subscribe":
+            subscription.clear()
+            subscription.extend(pkt['data'])
 
 
 async def handle_ws(websocket, path):
@@ -38,11 +47,17 @@ async def handle_ws(websocket, path):
     queue = asyncio.Queue()
     queues.append(queue)
 
+    subscription = []
+
     try:
-        fs = [handle_writes(websocket, queue), handle_reads(websocket)]
-        (_, pending) = await asyncio.wait(fs, return_when=asyncio.FIRST_EXCEPTION)
+        fs = [handle_writes(websocket, queue, subscription), handle_reads(websocket, subscription)]
+        (done, pending) = await asyncio.wait(fs, return_when=asyncio.FIRST_EXCEPTION)
         for f in pending:
             f.cancel()
+        for f in done:
+            ex = f.exception()
+            if ex:
+                raise ex
     except websockets.exceptions.ConnectionClosed:
         pass
     finally:

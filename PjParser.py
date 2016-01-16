@@ -1,4 +1,4 @@
-import struct
+ import struct
 
 
 def readParticipantInfo(pkt, offset, num):
