@@ -73,13 +73,13 @@ async def put_to_queue(data):
     for key in data:
         if key not in lastMsg or data[key] != lastMsg[key]:
             pkt[key] = data[key]
+            lastMsg[key] = data[key]
 
     for queue in queues:
         if queue.qsize() < 1:
             await queue.put(pkt)
         else:
             pass
-    lastMsg = data
 
 
 async def read_from_server(host: str, port: int, loop):
