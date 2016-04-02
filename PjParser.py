@@ -1,4 +1,4 @@
- import struct
+import struct
 
 
 def readParticipantInfo(pkt, offset, num):
@@ -291,13 +291,15 @@ def decodeTelemetryData(pkt):
          'OnTheGround': data['sTyreFlags'][3] & 4 == 4},
     )
 
+    data['sPad'] = data['sCrashState'] >> 4
+
     data['sCrashState'] = [
         'CRASH_DAMAGE_NONE',
         'CRASH_DAMAGE_OFFTRACK',
         'CRASH_DAMAGE_LARGE_PROP',
         'CRASH_DAMAGE_SPINNING',
         'CRASH_DAMAGE_ROLLING',
-    ][data['sCrashState']]
+    ][data['sCrashState'] & 2 ** 4 - 1]
 
     return data
 
