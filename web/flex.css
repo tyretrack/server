@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Economica', sans-serif;
+    text-align: center;
+}
+
+body {
+    background: #111;
+}
+
+.row {
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+}
+
+.col,
+.col-4,
+.col-6,
+.col-8 {
+    flex: 0 0 auto;
+}
+
+.col-4 {
+    flex-basis: 33.333%;
+    max-width: 33.333%;
+}
+
+.col-6 {
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.col-8 {
+    flex-basis: 66.667%;
+    max-width: 66.667%;
+}
+
+.col-12 {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.panel {
+    background: #fff;
+    margin: 10px;
+    height: 100%;
+}

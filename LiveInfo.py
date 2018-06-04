@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
 from socket import *
 import asyncio
-import PjParser
+
+from tyretrack import pcars
 import websockets
 import json
 import pickle
@@ -75,7 +75,7 @@ def update_opponents(pkt):
 
 async def handle_pjcars_pkt(data, addr):
     global lastMsg
-    isPkt, pkt = PjParser.decode(data)
+    isPkt, pkt = pcars.decode_v2(data)
     if isPkt:
         if pkt['sPacketType'] == 0 and pkt['sGameState'] != 'GAME_FRONT_END':
             lastMsg = pkt

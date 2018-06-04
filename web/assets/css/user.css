@@ -1,0 +1,71 @@
+html, body {height:100%;}
+body {font-family: 'Economica', sans-serif; background:#111; color:#222; text-align:center;}
+
+@media screen and (min-width : 1224px)  {
+	.hot {height:100%;}
+	}
+@media screen and (min-width : 1920px)  {
+	body > div {width:1440px;}
+	} 
+
+em {font-style:normal;	}
+
+
+body > .row {margin:0 10px;} 
+.row > div {margin:10px 0;}
+body > .row > div {margin:0;}
+.row > div > .row > div > .row > div {margin:0;}
+
+.hot svg {fill:#111;}
+.hot.night svg {fill:#eee;}
+
+.leckmichdoch > div:first-child {display:none;}
+.night .tile {background:#111; border:1px solid #222; color:#eee;}
+.vswitch {height:30px; width:30px; position:absolute; top:40px; right:40px; z-index:100;}
+.rpm {display:none;}
+.fullscreen {display:block; width:100%; height:100%; position:absolute; top:0;right:0;bottom:0;left:0; z-index:110;}
+.rpm strong {font-size: 400px; padding: 15% 0 0; display: block; width: 100%; height: 100%; position: absolute; line-height: 400px;}
+.wheel span {width:100%; height:100%;
+	background: url(data:image/gif;base64,R0lGODlhAQABAPAAAERERP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw) no-repeat;
+	display:block; padding-top:10%;}
+.hot.night .wheel {border:1px solid #444;}
+
+.col-md-8, .col-xs-8 {height:100%}
+.row, .col-md-4, .col-xs-12, .col-md-6, .col-xs-6, .col-md-12, .col-md-2, .col-xs-2 {position:relative; height:100%;}
+
+.tile, .controls {background:#fff; height:100%; margin:10px; position:absolute; top:0; right:0; left:0; bottom:0; font-size:24px; border-radius: 2px;}
+.controls {background:transparent;}
+
+.tile-8 strong {font-size:96px; display:block; line-height:96px; margin:25% 0 0;}
+
+.tile-4 strong {font-size:48px; display:block; line-height:96px; margin:25% 0 0;}
+
+.tile-34t {padding:25px 0 0;}
+.tile-34t strong {font-size:36px; display:block; margin:10px 0 0; line-height:36px;}
+
+.tile-34w { padding:40px 0 0;}
+
+.tile-35 {background:#0f0f0f; height: 100%; margin: 10px -5px 0; border-radius:2px;}
+
+.tile-24 {padding:45px 10px 10px;}
+.tile-24 strong {font-size:96px; display:block; margin:5% 0 0; line-height:24px;}
+
+.tile-26 {padding:25% 0 0;}
+.tile-26 strong {font-size:24px;}
+
+.tile-2 strong {font-size:72px; line-height:124px; margin:25% 0 0;}
+
+.tile-21 {padding:15px;}
+.tile-21 strong {font-size:48px; line-height:56px; display:block;}
+
+.tile-1 {background:#fff url(../../assets/img/track.svg) 50% 50% no-repeat; background-size:contain;}
+
+.wheel {background:#111; display:inline-block; color:#fff; width:30%; margin:10% 5% 2%; height:40%; text-align:center; vertical-align:middle; padding:0; border-radius:2px; overflow: hidden;}
+
+.op-ahead {width: 20px; height: 20px; margin:5px auto 10px; background:#f77; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;}
+.op-back  {background:#9e6;}
+
+.status-on  {color:#5d5; text-shadow:0 0px 23px #5d5;}
+.status-off {color:#f55; text-shadow:0 0px 23px #f55;}
+svg.status-on {fill:#5d5 !important; -webkit-filter: drop-shadow(0 0 5px #5d5); filter: drop-shadow(0 0 23px #5d5);}
+svg.status-off {fill:#f55 !important; -webkit-filter: drop-shadow(0 0 5px #f55); filter: drop-shadow(0 0 23px #f55);}

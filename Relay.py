@@ -4,11 +4,11 @@ import asyncio
 import logging
 import pickle
 import struct
-import sys
 import zlib
+import sys
 from socket import *
 
-import PjParser
+from tyretrack.pcars import v1, v2
 
 
 class CoroutineClientProtocol:
@@ -34,10 +34,10 @@ lastMsg = {}
 handledPackets = 0
 
 
-async def handle_pjcars_pkt(data, addr):
-    isPkt, pkt = PjParser.decode(data)
+async def handle_pjcars_pkt(data, _):
+    isPkt, pkt = v2.decode(data)
     if isPkt:
-        if pkt['sPacketType'] == 0 and pkt['sGameState'] != 'GAME_FRONT_END':
+        #TODO if pkt['sPacketType'] == 0 and pkt['sGameState'] != 'GAME_FRONT_END':
             asyncio.ensure_future(put_to_queue(pkt))
 
 
